@@ -1,0 +1,43 @@
+# McCulloch-Pitts Neuron Logic Gate Simulator 
+def mcp_neuron(inputs, weights, threshold): 
+    total = sum(i * w for i, w in zip(inputs, weights)) 
+    return 1 if total >= threshold else 0 
+# AND Gate 
+print("AND Gate:") 
+for x1 in [0, 1]: 
+    for x2 in [0, 1]: 
+        output = mcp_neuron([x1, x2], [1, 1], 2) 
+        print(f"{x1} AND {x2} = {output}") 
+# OR Gate 
+print("\nOR Gate:") 
+for x1 in [0, 1]: 
+    for x2 in [0, 1]: 
+        output = mcp_neuron([x1, x2], [1, 1], 1) 
+        print(f"{x1} OR {x2} = {output}") 
+# NOT Gate 
+print("\nNOT Gate:") 
+for x in [0, 1]: 
+    output = mcp_neuron([x], [-1], 0) 
+    print(f"NOT {x} = {output}") 
+# NOR Gate 
+print("\nNOR Gate:") 
+for x1 in [0, 1]: 
+    for x2 in [0, 1]: 
+        or_output = mcp_neuron([x1, x2], [1, 1], 1) 
+        nor_output = mcp_neuron([or_output], [-1], 0)  # NOT of OR 
+        print(f"{x1} NOR {x2} = {nor_output}") 
+2117230020234 
+ 
+ 
+print("XOR Gate:") 
+for x1 in [0, 1]: 
+    for x2 in [0, 1]: 
+        # Step 1: A AND B 
+        and_ab = mcp_neuron([x1, x2], [1, 1], 2) 
+        # Step 2: A OR B 
+        or_ab = mcp_neuron([x1, x2], [1, 1], 1) 
+        # Step 3: NOT (A AND B) 
+        not_and_ab = mcp_neuron([and_ab], [-1], 0) 
+        # Step 4: XOR = OR(A, B) AND NOT(AND(A, B)) 
+        xor_output = mcp_neuron([or_ab, not_and_ab], [1, 1], 2) 
+           print(f"{x1} XOR {x2} = {xor_output}")
